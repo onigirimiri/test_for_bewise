@@ -97,6 +97,8 @@ print("\nc) Имя менеджера:")
 for i in range(len(dlg_name)):
     print(f"Диалог {dlg_num[i]}\n {dlg_name[i]}")
 
+trigram = list(nltk.trigrams(prog.findall(str(text).lower()))) #тк компания может состоять из нескольких слов
+tgfd = nltk.FreqDist(trigram)
 print("d) В диалогах упоминались компании:")
 for i in range(len(tgfd.most_common(100))):
     if "компания" in tgfd.most_common(100)[i][0][0]:
@@ -107,6 +109,7 @@ for i in range(len(bgfd.most_common(1000000))):
         g = morph.parse(bgfd.most_common(1000000)[i][0][1])[0]
         if 'NOUN' in g.tag and g.score >= prob_thresh:
             print(bgfd.most_common(1000000)[i][0][1])
+
 
 bye_wiki = parser.fetch('до свидания','russian') # для того чтобы найти приветствия смотрим синонимы в словаре
 bye_syn_emph = bye_wiki[0]['definitions'][0]['examples'][0]
